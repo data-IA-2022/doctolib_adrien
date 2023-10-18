@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from authentification.models import Utilisateur, medecinPatient
 
+
 @login_required
 def accueil(request):
     prenom = request.user.username
@@ -36,12 +37,14 @@ def comptes(request):
                   "comptes.html",
                   {"regexMDP" : regexMDP, "message" : message})
 
+
 @login_required
 def edaia(request):
     if request.user.role != "medecin":
         return redirect("https://media.tenor.com/2euSOQYdz8oAAAAj/this-was-technically-illegal-maclen-stanley.gif")
     else:
         return render(request, "edaia.html")
+
 
 @login_required
 def associationMedecinPatient(request):
@@ -70,10 +73,3 @@ def associationMedecinPatient(request):
                   {"listePatientsNonAssocies" : listePatientsNonAssocies,
                    "medecins" : medecins,
                    "tableAssociationMedecinPatient" : tableAssociationMedecinPatient})
-
-
-
-
-
-
-

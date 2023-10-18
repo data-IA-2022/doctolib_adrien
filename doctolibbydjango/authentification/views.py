@@ -5,6 +5,8 @@ from authentification.models import Utilisateur
 import random 
 import string
 import pandas as pd
+from os.path import join
+
 
 def connexion(request):
     message = ""
@@ -22,6 +24,7 @@ def connexion(request):
     
     return render(request,
                       "connexion.html", {"message" : message})
+
 
 def deconnexion(request):
     logout(request)
@@ -43,20 +46,23 @@ def inscription(request):
 
 
 def alimentationPatients():
-    listePatients = pd.read_csv("/Users/narcy/Desktop/revision Django/doctolibbydjango/authentification/datas/listePatients.csv")
+    listePatients = pd.read_csv(join("doctolibbydjango", "authentification", "datas", "listePatients.csv"))
     for index, valeurs in listePatients.iterrows():
         #champDBB = Utilisateur._meta.get_fields()
         
         Utilisateur.objects.create_user(username = valeurs.username,
                                         password = valeurs.motDePasse,
                                         role="patient")
+
+
 def alimentationMedecin():
-    listeMedecins = pd.read_csv("/Users/narcy/Desktop/revision Django/doctolibbydjango/authentification/datas/listeMedecins.csv")
+    listeMedecins = pd.read_csv(join("doctolibbydjango", "authentification", "datas", "listeMedecins.csv"))
     for index, valeurs in listeMedecins.iterrows():
         Utilisateur.objects.create_user(username = valeurs.username,
                                         password = valeurs.motDePasse,
                                         role="medecin")
-        
+
+
 if len(Utilisateur.objects.filter(role="patient")) == 0:
     alimentationPatients()
 if len(Utilisateur.objects.filter(role="medecin")) == 0:
