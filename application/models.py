@@ -1,6 +1,7 @@
 from django.db import models
 from authentification.models import Utilisateur
 
+
 class FormulaireSante(models.Model):
     patient = models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
     date_remplissage = models.DateField()

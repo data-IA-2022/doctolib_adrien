@@ -1,10 +1,13 @@
 from django import forms
 from application.models import FormulaireSante
 
+
 class FormulaireSanteForm(forms.ModelForm):
     class Meta:
         model = FormulaireSante
         fields = "__all__"
+
+
 """
 class InfoGeneraleForm(forms.ModelForm):
     class Meta:
